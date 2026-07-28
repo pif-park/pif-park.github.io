@@ -58,13 +58,6 @@
             line-height: 1.6;
         }
 
-        .email-address {
-            font-size: 0.9rem;
-            color: var(--sub-text);
-            margin-top: 0.5rem;
-            word-break: break-all;
-        }
-
         .contact-btn {
             display: inline-block;
             background-color: var(--primary-color);
@@ -74,11 +67,30 @@
             text-decoration: none;
             font-weight: 600;
             margin-top: 1rem;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
             transition: background-color 0.2s;
         }
 
         .contact-btn:hover {
             background-color: #1d4ed8;
+        }
+
+        .email-display {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--sub-text);
+            word-break: break-all;
+            user-select: all; /* 클릭 시 전체 선택 가능 */
+        }
+
+        .copy-alert {
+            display: none;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #16a34a;
+            font-weight: 600;
         }
 
         footer {
@@ -96,15 +108,40 @@
 
         <div class="info-card">
             <p><strong>アプリに関するお問い合わせ・不具合のご報告</strong></p>
-            <p>アプリのご利用に関するご質問やご意見がございましたら、下記のお問い合わせボタンまたはメールアドレスよりご連絡ください。</p>
+            <p>アプリのご利用に関するご質問やご意見がございましたら、下記よりご連絡ください。</p>
             
-            <a href="mailto:bpark.apps@gmail.com" class="contact-btn">お問い合わせはこちら</a>
+            <button class="contact-btn" onclick="sendMail()">お問い合わせはこちら</button>
+            
+            <div class="email-display">
+                メールアドレス: <strong>bpark.apps@gmail.com</strong>
+            </div>
+            <div id="copyAlert" class="copy-alert">
+                ✓ メールアドレスをコピーしました！
+            </div>
         </div>
 
         <footer>
             &copy; BSP Studio. All rights reserved.
         </footer>
     </div>
+
+    <script>
+        function sendMail() {
+            const email = "bpark.apps@gmail.com";
+            
+            // 1. 클립보드에 이메일 주소 복사
+            navigator.clipboard.writeText(email).then(() => {
+                const alertBox = document.getElementById("copyAlert");
+                alertBox.style.display = "block";
+                setTimeout(() => {
+                    alertBox.style.display = "none";
+                }, 3000);
+            });
+
+            // 2. 메일 앱 실행 시도
+            window.location.href = "mailto:" + email;
+        }
+    </script>
 
 </body>
 </html>
